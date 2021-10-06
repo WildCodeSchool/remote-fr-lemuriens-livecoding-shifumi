@@ -6,9 +6,9 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const pierre = "shi";
-const feuille = "fu";
-const ciseaux = "mi";
+const pierre = "pierre";
+const feuille = "feuille";
+const ciseaux = "ciseaux";
 const answers = [pierre, feuille, ciseaux];
 
 rl.question(chalk.cyan(`${pierre} ${feuille} ${ciseaux} ? `), (humanAnswer) => {
@@ -23,17 +23,23 @@ rl.question(chalk.cyan(`${pierre} ${feuille} ${ciseaux} ? `), (humanAnswer) => {
   const robotChoice = answers[Math.floor(Math.random() * answers.length)];
   console.log(chalk.yellow(`robot choice : ${robotChoice}`));
 
+  console.log(game(humanAnswer, robotChoice));
+
+  rl.close();
+});
+
+function game(humanAnswer, robotChoice) {
   if (humanAnswer === robotChoice) {
-    console.log(chalk.bgGray('égalité'));
-  } else if (
+    return chalk.bgGray('égalité');
+  }
+  
+  if (
     (humanAnswer === pierre && robotChoice === ciseaux) ||
     (humanAnswer === feuille && robotChoice === pierre) ||
     (humanAnswer === ciseaux && robotChoice === feuille)
   ){
-    console.log(chalk.bgGreen("Gagné"));
-  } else {
-    console.log(chalk.bgRed("Perdu"));
+    return chalk.bgGreen("Gagné");
   }
-
-  rl.close();
-});
+  
+  return chalk.bgRed("Perdu");
+}
